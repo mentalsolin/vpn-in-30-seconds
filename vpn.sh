@@ -8,14 +8,17 @@ sudo apt install docker-compose -y
 # Install QR-Code encoder
 sudo apt install qrencode -y
 
-# Create directory for WireGuard in default path (/etc/wireguard)
-sudo mkdir /root/wireguard
+# Create directory for WireGuard in default path (/root/wireguard)
+path='/root/wireguard' # YOU CAN CHANGE THE PATH, IF YOU NEED IT
+
+sudo mkdir $path
 
 # Getting the IP address of the current computer
 current_ip=$(hostname -I | awk '{print $1}')
 
 # Creating a docker-compose.yaml file and adding an IP address
-cat <<EOF > /root/wireguard/docker-compose.yaml
+path_docker=$path/docker-compose.yaml
+cat <<EOF > $path_docker
 ---
 version: "2.1"
 services:
@@ -28,10 +31,10 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/Amsterdam # time zone of the server
+      - TZ=Europe/Frankfurt # time zone of the server
       - SERVERURL=$current_ip
       - SERVERPORT=51820 #port of the vpn
-      - PEERS=8 #count of peers
+      - PEERS=10 #count of peers
       - INTERNAL_SUBNET=10.10.0.0 #subnet
       - ALLOWEDIPS=0.0.0.0/0
       - LOG_CONFS=true #optional
@@ -45,4 +48,4 @@ services:
     restart: unless-stopped
 EOF
 
-sudo docker-compose -f /root/wireguard/docker-compose.yaml up -d
+sudo docker-compose -f $path_docker up -d

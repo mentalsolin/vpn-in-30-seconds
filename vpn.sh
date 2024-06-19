@@ -48,4 +48,4 @@ services:
     restart: unless-stopped
 EOF
 
-sudo docker-compose -f $path_docker up -d
+sudo docker compose -f $path_docker up -d

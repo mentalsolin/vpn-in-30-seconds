@@ -3,7 +3,7 @@
 sudo apt update -y
 
 # Install Docker Compose
-sudo apt install docker-compose -y
+sudo apt install docker compose -y
 
 # Install QR-Code encoder
 sudo apt install qrencode -y
